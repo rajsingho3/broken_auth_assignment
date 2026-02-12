@@ -1,0 +1,23 @@
+$ curl -X POST http://localhost:3000/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"rajsinghr.2409@gmail.com","password":"1234"}'
+
+{"message":"OTP sent","loginSessionId":"b0b1p"}
+
+
+$ curl -c cookies.txt -X POST http://localhost:3000/auth/verify-otp \
+  -H "Content-Type: application/json" \
+  -d '{"loginSessionId":"b0b1p","otp":"473250"}'
+
+{"message":"OTP verified","sessionId":"b0b1p"}
+
+
+$ curl -b cookies.txt -X POST http://localhost:3000/auth/token
+
+{"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhanNpbmdoci4yNDA5QGdtYWlsLmNvbSIsInNlc3Npb25JZCI6ImIwYjFwIiwiaWF0IjoxNzcwODgwMTU1LCJleHAiOjE3NzA4ODEwNTV9.CVfpBOpmhOpQTeBiJCvmV-3BL2eYHdD13yP8gytAdis"}
+
+
+$ curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhanNpbmdoci4yNDA5QGdtYWlsLmNvbSIsInNlc3Npb25JZCI6ImIwYjFwIiwiaWF0IjoxNzcwODgwMTU1LCJleHAiOjE3NzA4ODEwNTV9.CVfpBOpmhOpQTeBiJCvmV-3BL2eYHdD13yP8gytAdis" \
+  http://localhost:3000/protected
+
+{"message":"Access granted","user":{"email":"rajsinghr.2409@gmail.com","sessionId":"b0b1p","iat":1770880155,"exp":1770881055},"success_flag":"FLAG-cmFqc2luZ2hyLjI0MDlAZ21haWwuY29tX0NPTVBMRVRFRF9BU1NJR05NRU5U"}
